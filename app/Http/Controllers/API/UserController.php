@@ -55,7 +55,7 @@ class UserController extends Controller
                         'kd_perangkat' => $request->kd_perangkat,
                     ]);
             } else {
-                if ($user['kd_perangkat'] ==  $request->kd_perangkat) {
+                if ($user['kd_perangkat'] !=  $request->kd_perangkat) {
                     return ResponseFormatter::error([
                         'message' => 'Silahkan gunakan perangkat pribadi anda',
                         'error' => '',
