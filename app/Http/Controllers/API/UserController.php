@@ -58,8 +58,6 @@ class UserController extends Controller
                 if ($user['kd_perangkat'] !=  $request->kd_perangkat) {
                     return ResponseFormatter::error([
                         'message' => 'Silahkan gunakan perangkat pribadi anda',
-                        'error' => '',
-
                     ], 'Device not found', 501);
                 }
             }
