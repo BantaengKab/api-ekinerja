@@ -60,7 +60,7 @@ class UserController extends Controller
                         'message' => 'Silahkan gunakan perangkat pribadi anda',
                         'error' => '',
 
-                    ], 'Device not found', 501);
+                    ], 'Device not found', 502);
                 }
             }
 
