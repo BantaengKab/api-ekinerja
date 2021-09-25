@@ -24,6 +24,7 @@ class UserController extends Controller
             $validator = Validator::make($request->all(), [
                 'username' => 'required',
                 'pass' => 'required',
+                'kd_perangkat' => 'required',
             ]);
 
             if ($validator->fails()) {
@@ -47,6 +48,19 @@ class UserController extends Controller
 
             # Jika hash tidak sesuai
             $user = User::where('username', $request->username)->first();
+            if ($user['kd_perangkat'] ==  null) {
+                User::create([
+                    'kd_perangkat' => $request->kd_perangkat,
+                ]);
+            } else {
+                if ($user['kd_perangkat'] ==  $request->kd_perangkat) {
+                    return ResponseFormatter::error([
+                        'message' => 'Silahkan gunakan perangkat pribadi anda',
+
+                    ], 'Authentication Failed', 501);
+                }
+            }
+
 
             $md5 = md5($user['id']);
             $hash = hash('sha256', $md5 . $request->pass);
@@ -59,7 +73,7 @@ class UserController extends Controller
             //     throw new \Exception('Invalid Credentials');
             // }
 
-         
+
             # jika berhasil maka loginkan
             $tokenResult = $user->createToken($user['full_name']);
             $token = $tokenResult->token;
@@ -82,7 +96,7 @@ class UserController extends Controller
     {
         return ResponseFormatter::success($request->user(), 'Data profile user berhasil diambil');
     }
-    
+
     public function logout(Request $request)
     {
 
