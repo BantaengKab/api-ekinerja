@@ -50,7 +50,7 @@ class UserController extends Controller
             $user = User::where('username', $request->username)->first();
             if ($user['kd_perangkat'] ==  null) {
 
-                User::where('id', Auth::user()->id)
+                User::where('id', $user['id'])
                     ->update([
                         'kd_perangkat' => $request->kd_perangkat,
                     ]);
