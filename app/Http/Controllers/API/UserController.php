@@ -49,15 +49,18 @@ class UserController extends Controller
             # Jika hash tidak sesuai
             $user = User::where('username', $request->username)->first();
             if ($user['kd_perangkat'] ==  null) {
-                User::create([
-                    'kd_perangkat' => $request->kd_perangkat,
-                ]);
+
+                User::where('id', Auth::user()->id)
+                    ->update([
+                        'kd_perangkat' => $request->kd_perangkat,
+                    ]);
             } else {
                 if ($user['kd_perangkat'] ==  $request->kd_perangkat) {
                     return ResponseFormatter::error([
                         'message' => 'Silahkan gunakan perangkat pribadi anda',
+                        'error' => '',
 
-                    ], 'Authentication Failed', 501);
+                    ], 'Device not found', 501);
                 }
             }
 
