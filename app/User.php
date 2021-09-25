@@ -11,6 +11,8 @@ class User extends Authenticatable
 {
     use HasApiTokens, Notifiable;
 
+    public $timestamps = false;
+
     protected $table = 'aauth_users';
 
     /**
