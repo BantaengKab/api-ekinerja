@@ -11,10 +11,10 @@ class AbsenData extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'tanggal', 'masuk', 'istirahat', 'masuk2', 'pulang', 'kd_skpd', 'nip', 'status'
+        'absen_id', 'foto', 'kd_absen', 'lat', 'long'
     ];
 
-    # status 
+    # kd_absen 
     # 0. masuk
     # 1. istirahat
     # 2. masuk2

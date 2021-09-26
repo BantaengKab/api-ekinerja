@@ -14,9 +14,12 @@ class AbsenLog extends Model
         'tanggal', 'masuk', 'istirahat', 'masuk2', 'pulang', 'kd_skpd', 'nip', 'status'
     ];
 
-    # status 
+    # status
     # 0. biasa
     # 1. jumat
     # 2. shift
+
+
+
 
 }

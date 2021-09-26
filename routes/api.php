@@ -23,3 +23,4 @@ Route::group(['middleware' => 'auth:api'], function () {
 });
 
 Route::post('login', 'API\UserController@login');
+Route::get('absen', 'API\AbsenController@store');

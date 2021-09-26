@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\API;
 
-use App\AbsenRadius;
-use App\Helpers\ResponseFormatter;
 use App\Http\Controllers\Controller;
+use DateTime;
+use DateTimeZone;
 use Illuminate\Http\Request;
 
-class AbsenRadiusController extends Controller
+class AbsenController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,12 +16,7 @@ class AbsenRadiusController extends Controller
      */
     public function index()
     {
-        // future
-        // get berdasarkan skpd
-        $data = AbsenRadius::all();
-        return ResponseFormatter::success([
-            "list" => $data,
-        ], 'Authenticated', 200);
+        //
     }
 
     /**
@@ -42,7 +37,16 @@ class AbsenRadiusController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $jam_awal = '19:30';
+
+        $da =   strtotime($jam_awal);
+
+        return date('H:i', $da);
+
+
+
+        echo date('h:i:s A');
     }
 
     /**

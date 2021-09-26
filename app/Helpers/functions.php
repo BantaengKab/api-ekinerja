@@ -1,20 +1,23 @@
 <?php
 
-function cek_foto($foto)
+
+function getDistance($latitude1, $longitude1, $latitude2, $longitude2)
 {
-    $file = 'file-soal/' . $foto;
-    if (is_file($file)) {
-        return ' <img src="' . url('file-soal') . '/' . $foto . ' " width="90px" alt="">  </img>';
-    }
+    $earth_radius = 6371;
+
+    $dLat = deg2rad($latitude2 - $latitude1);
+    $dLon = deg2rad($longitude2 - $longitude1);
+
+    $a = sin($dLat / 2) * sin($dLat / 2) + cos(deg2rad($latitude1)) * cos(deg2rad($latitude2)) * sin($dLon / 2) * sin($dLon / 2);
+    $c = 2 * asin(sqrt($a));
+    $d = $earth_radius * $c;
+
+    return $d * 1000;
+
+    // $distance = getDistance(-5.16822309043619, 119.43464980464627, -5.168415424332763, 119.43578706126858);
+    // echo $distance * 1000; // km * 1000
 }
 
-function foto_soal($foto)
-{
-    $file = 'file-soal/' . $foto;
-    if (is_file($file)) {
-        return ' <img class="mb-4" src="' . url('file-soal') . '/' . $foto . ' " width="60%" alt="">';
-    }
-}
 
 
 function kode_unik($nominal)
