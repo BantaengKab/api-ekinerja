@@ -48,6 +48,7 @@ class UserController extends Controller
 
             # Jika hash tidak sesuai
             $user = User::where('username', $request->username)->first();
+            # cek perangkat yang digunakan
             if ($user['kd_perangkat'] ==  null) {
 
                 User::where('id', $user['id'])
