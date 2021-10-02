@@ -23,5 +23,5 @@ Route::group(['middleware' => 'auth:api'], function () {
 });
 
 Route::get('absen-radius', 'API\AbsenRadiusController@index');
-Route::post('login', 'API\UserController@login')->name('login'); //Updated 
+Route::post('login', 'API\UserController@login');
 Route::get('absen', 'API\AbsenController@store');
