@@ -59,21 +59,21 @@ class AbsenController extends Controller
             //return 1;
             if ($jam->jam_awal <= $jam_skrang && $jam->jam_akhir >= $jam_skrang) {
                 $absen = AbsenLog::whereDate('tanggal', '=', date('Y-m-d'))->where('nip', Auth::user()->username);
-                if ($absen->count() == 0) AbsenLog::create(['tanggal' => date('Y-m-d'), 'kd_skpd' => Auth::user()->kd_skpd, 'username' => Auth::user()->username]);
+                if ($absen->count() == 0) AbsenLog::create(['tanggal' => date('Y-m-d'), 'kd_skpd' => Auth::user()->kd_skpd, 'nip' => Auth::user()->username]);
 
                 $log = '';
                 if ($jam->kd_absen == 0 && $absen->first()['masuk'] == "") {
-                    $log = AbsenLog::where(['username' => Auth::user()->username, 'tanggal' => date('Y-m-d')])->update(['masuk' => $jam_skrang]);
+                    $log = AbsenLog::where(['nip' => Auth::user()->username, 'tanggal' => date('Y-m-d')])->update(['masuk' => $jam_skrang]);
                 } elseif ($jam->kd_absen == 1 && $absen->first()['istirahat'] == "") {
-                    $log = AbsenLog::where(['username' => Auth::user()->username, 'tanggal' => date('Y-m-d')])->update(['istirahat' => $jam_skrang]);
+                    $log = AbsenLog::where(['nip' => Auth::user()->username, 'tanggal' => date('Y-m-d')])->update(['istirahat' => $jam_skrang]);
                 } elseif ($jam->kd_absen == 2 && $absen->first()['masuk2'] == "") {
-                    $log = AbsenLog::where(['username' => Auth::user()->username, 'tanggal' => date('Y-m-d')])->update(['masuk2' => $jam_skrang]);
+                    $log = AbsenLog::where(['nip' => Auth::user()->username, 'tanggal' => date('Y-m-d')])->update(['masuk2' => $jam_skrang]);
                 } elseif ($jam->kd_absen == 3 && $absen->first()['pulang'] == "") {
-                    $log = AbsenLog::where(['username' => Auth::user()->username, 'tanggal' => date('Y-m-d')])->update(['pulang' => $jam_skrang]);
+                    $log = AbsenLog::where(['nip' => Auth::user()->username, 'tanggal' => date('Y-m-d')])->update(['pulang' => $jam_skrang]);
                 } elseif ($jam->kd_absen == 4 && $absen->first()['masuk'] == "") {
-                    $log = AbsenLog::where(['username' => Auth::user()->username, 'tanggal' => date('Y-m-d')])->update(['masuk' => $jam_skrang]);
+                    $log = AbsenLog::where(['nip' => Auth::user()->username, 'tanggal' => date('Y-m-d')])->update(['masuk' => $jam_skrang]);
                 } elseif ($jam->kd_absen == 5 && $absen->first()['pulang'] == "") {
-                    $log = AbsenLog::where(['username' => Auth::user()->username, 'tanggal' => date('Y-m-d')])->update(['pulang' => $jam_skrang]);
+                    $log = AbsenLog::where(['nip' => Auth::user()->username, 'tanggal' => date('Y-m-d')])->update(['pulang' => $jam_skrang]);
                 }
 
                 if ($log == '') {
