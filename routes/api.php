@@ -17,11 +17,11 @@ use Illuminate\Support\Facades\Route;
 Route::group(['middleware' => 'auth:api'], function () {
     //  user
 
+    Route::get('user', 'API\UserController@fetch');
     Route::post('logout', 'API\UserController@logout');
     Route::resource('permohonan', 'API\PermohonanController');
 });
 
-Route::get('user', 'API\UserController@fetch');
+Route::get('absen-radius', 'API\AbsenRadiusController@index');
 Route::post('login', 'API\UserController@login')->name('login'); //Updated 
 Route::get('absen', 'API\AbsenController@store');
-Route::get('absen-radius', 'API\AbsenRadiusController@index');
