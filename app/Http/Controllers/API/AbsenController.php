@@ -61,18 +61,68 @@ class AbsenController extends Controller
                 if ($absen->count() == 0) AbsenLog::create(['tanggal' => date('Y-m-d'), 'kd_skpd' => Auth::user()->kd_skpd, 'nip' => Auth::user()->username]);
 
                 $log = AbsenLog::whereDate('tanggal', '=', date('Y-m-d'))->where('nip', Auth::user()->username);
+
+                $gambar = $request->file('gambar');
+                $filename_gambar = time() . '.' . $gambar->getClientOriginalExtension();
+
+                $dt = new AbsenData;
+                $dt->lat = $request->lat;
+                $dt->long = $request->long;
+
                 if ($jam->kd_absen == 0 && $absen->first()['masuk'] == "") {
                     $log->first()->update(['masuk' => $jam_skrang]);
+
+                    $gambar->move('dokumen/', $filename_gambar);
+
+                    $dt->absen_id = $log->first()['id'];
+                    $dt->kd_absen = $jam->kd_absen;
+                    $dt->foto = $filename_gambar;
+                    $dt->save();
                 } elseif ($jam->kd_absen == 1 && $absen->first()['istirahat'] == "") {
                     $log->first()->update(['istirahat' => $jam_skrang]);
+
+                    $gambar->move('dokumen/', $filename_gambar);
+
+                    $dt->absen_id = $log->first()['id'];
+                    $dt->kd_absen = $jam->kd_absen;
+                    $dt->foto = $filename_gambar;
+                    $dt->save();
                 } elseif ($jam->kd_absen == 2 && $absen->first()['masuk2'] == "") {
                     $log->first()->update(['masuk2' => $jam_skrang]);
+
+                    $gambar->move('dokumen/', $filename_gambar);
+
+                    $dt->absen_id = $log->first()['id'];
+                    $dt->kd_absen = $jam->kd_absen;
+                    $dt->foto = $filename_gambar;
+                    $dt->save();
                 } elseif ($jam->kd_absen == 3 && $absen->first()['pulang'] == "") {
                     $log->first()->update(['pulang' => $jam_skrang]);
+
+                    $gambar->move('dokumen/', $filename_gambar);
+
+                    $dt->absen_id = $log->first()['id'];
+                    $dt->kd_absen = $jam->kd_absen;
+                    $dt->foto = $filename_gambar;
+                    $dt->save();
                 } elseif ($jam->kd_absen == 4 && $absen->first()['masuk'] == "") {
                     $log->first()->update(['masuk' => $jam_skrang]);
+
+                    $gambar->move('dokumen/', $filename_gambar);
+
+                    $dt->absen_id = $log->first()['id'];
+                    $dt->kd_absen = $jam->kd_absen;
+                    $dt->foto = $filename_gambar;
+                    $dt->save();
                 } elseif ($jam->kd_absen == 5 && $absen->first()['pulang'] == "") {
                     $log->first()->update(['pulang' => $jam_skrang]);
+
+                    $gambar->move('dokumen/', $filename_gambar);
+
+                    $dt->absen_id = $log->first()['id'];
+                    $dt->kd_absen = $jam->kd_absen;
+                    $dt->foto = $filename_gambar;
+                    $dt->save();
                 }
 
                 // return $log->first()['id'];
