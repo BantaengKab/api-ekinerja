@@ -54,7 +54,7 @@ class AbsenController extends Controller
         // $jam_awal = '19:30';
         // $jam_akhir = '20:30';
         $jam_skrang =  date('H:i:s');
-
+        return $jam_skrang;
         foreach ($jamKerja as $jam) {
             if ($jam->jam_awal >= $jam_skrang && $jam->jam_akhir <= $jam_skrang) {
                 $absen = AbsenLog::whereDate('tanggal', '=', date('Y-m-d'))->where('nip', Auth::user()->username);
