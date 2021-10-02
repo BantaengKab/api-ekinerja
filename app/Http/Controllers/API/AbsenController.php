@@ -62,17 +62,17 @@ class AbsenController extends Controller
                 if ($absen->count() == 0) AbsenLog::create(['tanggal' => date('Y-m-d'), 'kd_skpd' => Auth::user()->kd_skpd, 'username' => Auth::user()->username]);
 
                 $log = '';
-                if ($jam->kd_absen == 0 && $absen->first()->masuk == "") {
+                if ($jam->kd_absen == 0 && $absen->first()['masuk'] == "") {
                     $log = AbsenLog::where(['username' => Auth::user()->username, 'tanggal' => date('Y-m-d')])->update(['masuk' => $jam_skrang]);
-                } elseif ($jam->kd_absen == 1 && $absen->first()->istirahat == "") {
+                } elseif ($jam->kd_absen == 1 && $absen->first()['istirahat'] == "") {
                     $log = AbsenLog::where(['username' => Auth::user()->username, 'tanggal' => date('Y-m-d')])->update(['istirahat' => $jam_skrang]);
-                } elseif ($jam->kd_absen == 2 && $absen->first()->masuk2 == "") {
+                } elseif ($jam->kd_absen == 2 && $absen->first()['masuk2'] == "") {
                     $log = AbsenLog::where(['username' => Auth::user()->username, 'tanggal' => date('Y-m-d')])->update(['masuk2' => $jam_skrang]);
-                } elseif ($jam->kd_absen == 3 && $absen->first()->pulang == "") {
+                } elseif ($jam->kd_absen == 3 && $absen->first()['pulang'] == "") {
                     $log = AbsenLog::where(['username' => Auth::user()->username, 'tanggal' => date('Y-m-d')])->update(['pulang' => $jam_skrang]);
-                } elseif ($jam->kd_absen == 4 && $absen->first()->masuk == "") {
+                } elseif ($jam->kd_absen == 4 && $absen->first()['masuk'] == "") {
                     $log = AbsenLog::where(['username' => Auth::user()->username, 'tanggal' => date('Y-m-d')])->update(['masuk' => $jam_skrang]);
-                } elseif ($jam->kd_absen == 5 && $absen->first()->pulang == "") {
+                } elseif ($jam->kd_absen == 5 && $absen->first()['pulang'] == "") {
                     $log = AbsenLog::where(['username' => Auth::user()->username, 'tanggal' => date('Y-m-d')])->update(['pulang' => $jam_skrang]);
                 }
 
