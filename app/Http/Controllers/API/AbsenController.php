@@ -2,10 +2,15 @@
 
 namespace App\Http\Controllers\API;
 
+use App\AbsenData;
+use App\AbsenLog;
+use App\Helpers\ResponseFormatter;
 use App\Http\Controllers\Controller;
+use App\JamKerja;
 use DateTime;
 use DateTimeZone;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AbsenController extends Controller
 {
@@ -16,7 +21,10 @@ class AbsenController extends Controller
      */
     public function index()
     {
-        //
+        $data = AbsenLog::get();
+        return ResponseFormatter::success([
+            "list" => $data,
+        ], 'Authenticated', 200);
     }
 
     /**
@@ -38,15 +46,70 @@ class AbsenController extends Controller
     public function store(Request $request)
     {
 
-        $jam_awal = '19:30';
 
-        $da =   strtotime($jam_awal);
-
-        return date('H:i', $da);
+        $jamKerja = JamKerja::all();
 
 
+        // $jam_awal = '19:30';
+        // $jam_akhir = '20:30';
+        $jam_skrang =  date('H:i');
 
-        echo date('h:i:s A');
+        foreach ($jamKerja as $jam) {
+            if ($jam->jam_awal >= $jam_skrang && $jam->jam_akhir <= $jam_skrang) {
+                $absen = AbsenLog::whereDate('tanggal', '=', date('Y-m-d'))->where('nip', Auth::user()->username);
+                if ($absen->count() == 0) AbsenLog::create(['tanggal' => date('Y-m-d'), 'kd_skpd' => Auth::user()->kd_skpd, 'username' => Auth::user()->username]);
+
+                $log = '';
+                if ($jam->kd_absen == 0 && $absen->first()->masuk == "") {
+                    $log = AbsenLog::where(['username' => Auth::user()->username, 'tanggal' => date('Y-m-d')])->update(['masuk' => $jam_skrang]);
+                } elseif ($jam->kd_absen == 1 && $absen->first()->istirahat == "") {
+                    $log = AbsenLog::where(['username' => Auth::user()->username, 'tanggal' => date('Y-m-d')])->update(['istirahat' => $jam_skrang]);
+                } elseif ($jam->kd_absen == 2 && $absen->first()->masuk2 == "") {
+                    $log = AbsenLog::where(['username' => Auth::user()->username, 'tanggal' => date('Y-m-d')])->update(['masuk2' => $jam_skrang]);
+                } elseif ($jam->kd_absen == 3 && $absen->first()->pulang == "") {
+                    $log = AbsenLog::where(['username' => Auth::user()->username, 'tanggal' => date('Y-m-d')])->update(['pulang' => $jam_skrang]);
+                } elseif ($jam->kd_absen == 4 && $absen->first()->masuk == "") {
+                    $log = AbsenLog::where(['username' => Auth::user()->username, 'tanggal' => date('Y-m-d')])->update(['masuk' => $jam_skrang]);
+                } elseif ($jam->kd_absen == 5 && $absen->first()->pulang == "") {
+                    $log = AbsenLog::where(['username' => Auth::user()->username, 'tanggal' => date('Y-m-d')])->update(['pulang' => $jam_skrang]);
+                }
+
+                if ($log == '') {
+                    $filename_gambar = null;
+                    if ($request->file('gambar')) {
+                        $gambar = $request->file('gambar');
+                        $filename_gambar = time() . '.' . $gambar->getClientOriginalExtension();
+                        $gambar->move('gambar/', $filename_gambar);
+                    }
+                    AbsenData::create([
+                        'absen_id' => $log->id,
+                        'foto' => $log->$filename_gambar,
+                        'kd_absen' => $jam->kd_absen,
+                        'lat' => $request->lat,
+                        'long' => $request->long,
+                    ]);
+
+                    return ResponseFormatter::success([
+                        "message" => "Berhasil absen",
+                    ], 'Authenticated', 200);
+                }
+            }
+        }
+
+        return ResponseFormatter::error([
+            "message" => "Diluar jam kerja",
+        ], 'Authenticated', 200);
+
+
+
+
+        // $awal =   strtotime($jam_awal);
+        // $skrang =   strtotime($jam_skrang);
+
+        // return date('H:i', $awal);
+
+        // echo date('h:i:s A');
+
     }
 
     /**

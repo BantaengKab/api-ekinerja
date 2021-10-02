@@ -12,6 +12,7 @@ use Exception;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use App\Helpers\ResponseFormatter;
+
 class PermohonanController extends Controller
 {
     /**
@@ -21,13 +22,13 @@ class PermohonanController extends Controller
      */
     public function index()
     {
-            $nip = Auth::user()->username;
-            $pegawai_id = Pegawai::where('nip_pegawai', $nip)->first();
-            $now = date('Y-m');
-            $cek = Permohonan::where('pegawai_id', $pegawai_id['id_pegawai'])->where('tgl_mulai', 'LIKE', '%'.$now.'%')->orderBy('id_permohonan', 'desc')->get();
-             return ResponseFormatter::success([
-                    "list" => $cek,
-                ], 'Authenticated', 200);
+        $nip = Auth::user()->username;
+        $pegawai_id = Pegawai::where('nip_pegawai', $nip)->first();
+        $now = date('Y-m');
+        $cek = Permohonan::where('pegawai_id', $pegawai_id['id_pegawai'])->where('tgl_mulai', 'LIKE', '%' . $now . '%')->orderBy('id_permohonan', 'desc')->get();
+        return ResponseFormatter::success([
+            "list" => $cek,
+        ], 'Authenticated', 200);
     }
 
     /**
@@ -48,16 +49,16 @@ class PermohonanController extends Controller
      */
     public function store(Request $request)
     {
-    date_default_timezone_set('Asia/Makassar');
+
         try {
-          $validator = Validator::make($request->all(), [
+            $validator = Validator::make($request->all(), [
                 'long' => 'required',
                 'lat' => 'required',
                 'gambar' => 'required',
                 'jenis_permohonan' => 'required',
-           
-                
-                
+
+
+
             ]);
 
             if ($validator->fails()) {
@@ -66,57 +67,51 @@ class PermohonanController extends Controller
                     "message" => $validator->errors(),
                 ], 'Authentication Failed', 422);
             }
-            
+
             if ($request->file('gambar')) {
                 $gambar = $request->file('gambar');
                 $filename_gambar = time() . '.' . $gambar->getClientOriginalExtension();
                 $gambar->move('permohonan/', $filename_gambar);
-                
             } else {
                 $filename_gambar = null;
-                    
             }
-            
-          
+
+
             $nip = Auth::user()->username;
             $pegawai_id = Pegawai::where('nip_pegawai', $nip)->first();
-            
-            
+
+
             $now = date('Y-m-d');
-            $cek = Permohonan::where('pegawai_id', $pegawai_id['id_pegawai'])->where('tgl_mulai', 'LIKE', '%'.$now.'%')->count();
-            
+            $cek = Permohonan::where('pegawai_id', $pegawai_id['id_pegawai'])->where('tgl_mulai', 'LIKE', '%' . $now . '%')->count();
+
             // if($cek > 0 ){
-                
+
             //     return ResponseFormatter::error([
             //         "error" => 'Data Sudah Ada',
             //         "message" => 'Anda Telah Absen Hari ini',
             //     ], 'Authentication Failed', 400);
             // }
             $input = $request->all();
-            $input['pegawai_id']=$pegawai_id['id_pegawai'];
-            $input['kd_skpd']=$pegawai_id['kd_skpd'];
-            $input['gambar']=$filename_gambar;
-            $input['site']="mobile";
-            $input['tgl_mulai']=date('Y-m-d');
-            $input['tgl_selesai']=date('Y-m-d');
-            $input['creation_date']=date('Y-m-d H:i:s');
-           
+            $input['pegawai_id'] = $pegawai_id['id_pegawai'];
+            $input['kd_skpd'] = $pegawai_id['kd_skpd'];
+            $input['gambar'] = $filename_gambar;
+            $input['site'] = "mobile";
+            $input['tgl_mulai'] = date('Y-m-d');
+            $input['tgl_selesai'] = date('Y-m-d');
+            $input['creation_date'] = date('Y-m-d H:i:s');
+
             $data = Permohonan::create($input);
-            
-                return ResponseFormatter::success([
-                    "message" => "Data Berhasil direkam",
-                ], 'Authenticated', 200);
-            
-            
+
+            return ResponseFormatter::success([
+                "message" => "Data Berhasil direkam",
+            ], 'Authenticated', 200);
         } catch (Exception $error) {
             return ResponseFormatter::error([
                 'message' => 'Something went error',
                 'error' => $error,
 
             ], 'Authentication Failed', 500);
-        } 
-            
-            
+        }
     }
 
     /**
