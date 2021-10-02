@@ -20,8 +20,9 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('user', 'API\UserController@fetch');
     Route::post('logout', 'API\UserController@logout');
     Route::resource('permohonan', 'API\PermohonanController');
+    Route::get('absen-radius', 'API\AbsenRadiusController@index');
 });
 
-Route::get('absen-radius', 'API\AbsenRadiusController@index');
+
 Route::post('login', 'API\UserController@login');
 Route::get('absen', 'API\AbsenController@store');
