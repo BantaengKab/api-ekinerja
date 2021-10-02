@@ -57,47 +57,44 @@ class AbsenController extends Controller
         // return $jam_skrang;
         foreach ($jamKerja as $jam) {
             if ($jam->jam_awal <= $jam_skrang && $jam->jam_akhir >= $jam_skrang) {
-                return 1;
                 $absen = AbsenLog::whereDate('tanggal', '=', date('Y-m-d'))->where('nip', Auth::user()->username);
-                if ($absen->count() == 0) {
-                    AbsenLog::create(['tanggal' => date('Y-m-d'), 'kd_skpd' => Auth::user()->kd_skpd, 'nip' => Auth::user()->username]);
+                if ($absen->count() == 0) AbsenLog::create(['tanggal' => date('Y-m-d'), 'kd_skpd' => Auth::user()->kd_skpd, 'nip' => Auth::user()->username]);
 
-                    $log = AbsenLog::whereDate('tanggal', '=', date('Y-m-d'))->where('nip', Auth::user()->username);
-                    if ($jam->kd_absen == 0 && $absen->first()['masuk'] == "") {
-                        $log->first()->update(['masuk' => $jam_skrang]);
-                    } elseif ($jam->kd_absen == 1 && $absen->first()['istirahat'] == "") {
-                        $log->first()->update(['istirahat' => $jam_skrang]);
-                    } elseif ($jam->kd_absen == 2 && $absen->first()['masuk2'] == "") {
-                        $log->first()->update(['masuk2' => $jam_skrang]);
-                    } elseif ($jam->kd_absen == 3 && $absen->first()['pulang'] == "") {
-                        $log->first()->update(['pulang' => $jam_skrang]);
-                    } elseif ($jam->kd_absen == 4 && $absen->first()['masuk'] == "") {
-                        $log->first()->update(['masuk' => $jam_skrang]);
-                    } elseif ($jam->kd_absen == 5 && $absen->first()['pulang'] == "") {
-                        $log->first()->update(['pulang' => $jam_skrang]);
+                $log = AbsenLog::whereDate('tanggal', '=', date('Y-m-d'))->where('nip', Auth::user()->username);
+                if ($jam->kd_absen == 0 && $absen->first()['masuk'] == "") {
+                    $log->first()->update(['masuk' => $jam_skrang]);
+                } elseif ($jam->kd_absen == 1 && $absen->first()['istirahat'] == "") {
+                    $log->first()->update(['istirahat' => $jam_skrang]);
+                } elseif ($jam->kd_absen == 2 && $absen->first()['masuk2'] == "") {
+                    $log->first()->update(['masuk2' => $jam_skrang]);
+                } elseif ($jam->kd_absen == 3 && $absen->first()['pulang'] == "") {
+                    $log->first()->update(['pulang' => $jam_skrang]);
+                } elseif ($jam->kd_absen == 4 && $absen->first()['masuk'] == "") {
+                    $log->first()->update(['masuk' => $jam_skrang]);
+                } elseif ($jam->kd_absen == 5 && $absen->first()['pulang'] == "") {
+                    $log->first()->update(['pulang' => $jam_skrang]);
+                }
+
+                return $log->first()['id'];
+                if ($log->first()['id'] != '') {
+                    $filename_gambar = null;
+                    if ($request->file('gambar')) {
+                        $gambar = $request->file('gambar');
+                        $filename_gambar = time() . '.' . $gambar->getClientOriginalExtension();
+                        $gambar->move('dokumen/', $filename_gambar);
                     }
 
-                    return $log->first()['id'];
-                    if ($log->first()['id'] != '') {
-                        $filename_gambar = null;
-                        if ($request->file('gambar')) {
-                            $gambar = $request->file('gambar');
-                            $filename_gambar = time() . '.' . $gambar->getClientOriginalExtension();
-                            $gambar->move('dokumen/', $filename_gambar);
-                        }
+                    AbsenData::create([
+                        'absen_id' => $log->first()['id'],
+                        'foto' => $filename_gambar,
+                        'kd_absen' => $jam->kd_absen,
+                        'lat' => $request->lat,
+                        'long' => $request->long,
+                    ]);
 
-                        AbsenData::create([
-                            'absen_id' => $log->first()['id'],
-                            'foto' => $filename_gambar,
-                            'kd_absen' => $jam->kd_absen,
-                            'lat' => $request->lat,
-                            'long' => $request->long,
-                        ]);
-
-                        return ResponseFormatter::success([
-                            "message" => "Berhasil absen",
-                        ], 'Authenticated', 200);
-                    }
+                    return ResponseFormatter::success([
+                        "message" => "Berhasil absen",
+                    ], 'Authenticated', 200);
                 }
             }
         }
