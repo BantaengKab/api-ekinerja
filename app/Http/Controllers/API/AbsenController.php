@@ -81,7 +81,7 @@ class AbsenController extends Controller
                     if ($request->file('gambar')) {
                         $gambar = $request->file('gambar');
                         $filename_gambar = time() . '.' . $gambar->getClientOriginalExtension();
-                        $gambar->move('gambar/', $filename_gambar);
+                        $gambar->move('dokumen/', $filename_gambar);
                     }
                     AbsenData::create([
                         'absen_id' => $log->id,
