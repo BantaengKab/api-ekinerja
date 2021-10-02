@@ -22,5 +22,5 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::resource('permohonan', 'API\PermohonanController');
 });
 
-Route::post('login', 'API\UserController@login');
+Route::post('login', 'API\UserController@login')->name('login'); //Updated 
 Route::get('absen', 'API\AbsenController@store');
