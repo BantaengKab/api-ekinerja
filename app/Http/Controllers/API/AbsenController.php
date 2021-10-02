@@ -68,15 +68,15 @@ class AbsenController extends Controller
                 $dt = new AbsenData;
                 $dt->lat = $request->lat;
                 $dt->long = $request->long;
+                $dt->foto = $filename_gambar;
+                $dt->absen_id = $log->first()['id'];
 
                 if ($jam->kd_absen == 0 && $absen->first()['masuk'] == "") {
                     $log->first()->update(['masuk' => $jam_skrang]);
 
                     $gambar->move('dokumen/', $filename_gambar);
 
-                    $dt->absen_id = $log->first()['id'];
                     $dt->kd_absen = $jam->kd_absen;
-                    $dt->foto = $filename_gambar;
                     $dt->save();
 
                     return ResponseFormatter::success([
@@ -87,9 +87,7 @@ class AbsenController extends Controller
 
                     $gambar->move('dokumen/', $filename_gambar);
 
-                    $dt->absen_id = $log->first()['id'];
                     $dt->kd_absen = $jam->kd_absen;
-                    $dt->foto = $filename_gambar;
                     $dt->save();
 
                     return ResponseFormatter::success([
@@ -100,9 +98,7 @@ class AbsenController extends Controller
 
                     $gambar->move('dokumen/', $filename_gambar);
 
-                    $dt->absen_id = $log->first()['id'];
                     $dt->kd_absen = $jam->kd_absen;
-                    $dt->foto = $filename_gambar;
                     $dt->save();
 
                     return ResponseFormatter::success([
@@ -113,9 +109,8 @@ class AbsenController extends Controller
 
                     $gambar->move('dokumen/', $filename_gambar);
 
-                    $dt->absen_id = $log->first()['id'];
+
                     $dt->kd_absen = $jam->kd_absen;
-                    $dt->foto = $filename_gambar;
                     $dt->save();
 
                     return ResponseFormatter::success([
@@ -126,9 +121,8 @@ class AbsenController extends Controller
 
                     $gambar->move('dokumen/', $filename_gambar);
 
-                    $dt->absen_id = $log->first()['id'];
+
                     $dt->kd_absen = $jam->kd_absen;
-                    $dt->foto = $filename_gambar;
                     $dt->save();
 
                     return ResponseFormatter::success([
@@ -137,11 +131,8 @@ class AbsenController extends Controller
                 } elseif ($jam->kd_absen == 5 && $absen->first()['pulang'] == "") {
                     $log->first()->update(['pulang' => $jam_skrang]);
 
-                    $gambar->move('dokumen/', $filename_gambar);
 
-                    $dt->absen_id = $log->first()['id'];
                     $dt->kd_absen = $jam->kd_absen;
-                    $dt->foto = $filename_gambar;
                     $dt->save();
 
                     return ResponseFormatter::success([
@@ -149,7 +140,7 @@ class AbsenController extends Controller
                     ], 'Authenticated', 200);
                 } else {
                     return ResponseFormatter::error([
-                        "message" => "Anda sudah  absen",
+                        "message" => "Anda sudah absen",
                     ], 'Authenticated');
                 }
 
