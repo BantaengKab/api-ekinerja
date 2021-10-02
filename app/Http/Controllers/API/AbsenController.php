@@ -75,7 +75,7 @@ class AbsenController extends Controller
                     $log->first()->update(['pulang' => $jam_skrang]);
                 }
 
-                return $log->first()['id'];
+                // return $log->first()['id'];
                 if ($log->first()['id'] != '') {
                     $filename_gambar = null;
                     if ($request->file('gambar')) {
