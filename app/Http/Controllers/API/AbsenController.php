@@ -84,8 +84,8 @@ class AbsenController extends Controller
                         $gambar->move('dokumen/', $filename_gambar);
                     }
                     AbsenData::create([
-                        'absen_id' => $log->id,
-                        'foto' => $log->$filename_gambar,
+                        'absen_id' => $log['id'],
+                        'foto' => $filename_gambar,
                         'kd_absen' => $jam->kd_absen,
                         'lat' => $request->lat,
                         'long' => $request->long,
