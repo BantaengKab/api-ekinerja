@@ -53,7 +53,7 @@ class AbsenController extends Controller
 
         // $jam_awal = '19:30';
         // $jam_akhir = '20:30';
-        $jam_skrang =  date('H:i');
+        $jam_skrang =  date('H:i:s');
 
         foreach ($jamKerja as $jam) {
             if ($jam->jam_awal >= $jam_skrang && $jam->jam_akhir <= $jam_skrang) {
