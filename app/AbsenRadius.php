@@ -11,6 +11,12 @@ class AbsenRadius extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'lat', 'long', 'radius', 'kd_skpd', 'nama_lokasi'
+        'lat', 'long', 'radius', 'kd_skpd'
     ];
+
+
+    public function skpd()
+    {
+        return $this->belongsTo(Skpd::class, 'kd_skpd', 'kode');
+    }
 }

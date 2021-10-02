@@ -18,7 +18,7 @@ class AbsenRadiusController extends Controller
     {
         // future
         // get berdasarkan skpd
-        $data = AbsenRadius::all();
+        $data = AbsenRadius::with('skpd')->get();
         return ResponseFormatter::success([
             "list" => $data,
         ], 'Authenticated', 200);
