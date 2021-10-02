@@ -20,6 +20,7 @@ class AbsenLog extends Model
     {
         return $this->hasMany(AbsenData::class, 'absen_id', 'id');
     }
+
     # status
     # 0. biasa
     # 1. jumat
