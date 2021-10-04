@@ -22,7 +22,7 @@ class AbsenController extends Controller
      */
     public function index()
     {
-        $data = AbsenLog::with('dataAbsen')->get();
+        $data = AbsenLog::with('dataAbsen')->where('nip', Auth::user()->nip)->get();
         return ResponseFormatter::success([
             "list" => $data,
         ], 'Authenticated', 200);
