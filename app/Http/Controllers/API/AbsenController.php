@@ -50,7 +50,7 @@ class AbsenController extends Controller
 
 
         $jamKerja = JamKerja::all();
-        $pegawai = Pegawai::where('nip_pengawai', Auth::user()->username)->first();
+        $pegawai = Pegawai::where('nip_pegawai', Auth::user()->username)->first();
         $absenRadius = AbsenRadius::where('kd_skpd', $pegawai['kd_skpd'])->first();
         $lat = $request->lat;
         $long = $request->long;
