@@ -49,18 +49,15 @@ class AbsenController extends Controller
 
 
         $jamKerja = JamKerja::all();
-        // $absenRadius = AbsenRadius::all();
+        $absenRadius = AbsenRadius::where('kd_skpd', Auth::user()->kd_skpd)->first();
         $lat = $request->lat;
         $long = $request->long;
 
         // $jam_awal = '19:30';
         // $jam_akhir = '20:30';
         $jam_skrang =  date('H:i:s');
-
-        // foreach ($absenRadius as $radius) {
-
-        // }
-
+        $cek = getDistance($absenRadius['lat'], $absenRadius['long'], $lat, $long);
+        if (!isset($cek)) return ResponseFormatter::error([], 'Anda berada di luar area absensi ', 400);
 
 
 
