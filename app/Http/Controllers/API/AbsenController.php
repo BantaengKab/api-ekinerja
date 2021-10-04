@@ -8,6 +8,7 @@ use App\AbsenRadius;
 use App\Helpers\ResponseFormatter;
 use App\Http\Controllers\Controller;
 use App\JamKerja;
+use App\Pegawai;
 use DateTime;
 use DateTimeZone;
 use Illuminate\Http\Request;
@@ -49,7 +50,8 @@ class AbsenController extends Controller
 
 
         $jamKerja = JamKerja::all();
-        $absenRadius = AbsenRadius::where('kd_skpd', Auth::user()->kd_skpd)->first();
+        $pegawai = Pegawai::where('nip', Auth::user()->username)->first();
+        $absenRadius = AbsenRadius::where('kd_skpd', $pegawai['kd_skpd'])->first();
         $lat = $request->lat;
         $long = $request->long;
 
