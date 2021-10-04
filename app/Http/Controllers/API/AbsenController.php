@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\AbsenData;
 use App\AbsenLog;
+use App\AbsenRadius;
 use App\Helpers\ResponseFormatter;
 use App\Http\Controllers\Controller;
 use App\JamKerja;
@@ -46,16 +47,25 @@ class AbsenController extends Controller
     {
 
 
-
-
         $jamKerja = JamKerja::all();
-
+        // $absenRadius = AbsenRadius::all();
+        $lat = $request->lat;
+        $long = $request->long;
 
         // $jam_awal = '19:30';
         // $jam_akhir = '20:30';
         $jam_skrang =  date('H:i:s');
-        // return $jam_skrang;
+
+        // foreach ($absenRadius as $radius) {
+
+        // }
+
+
+
+
         foreach ($jamKerja as $jam) {
+
+
             if ($jam->jam_awal <= $jam_skrang && $jam->jam_akhir >= $jam_skrang) {
                 $absen = AbsenLog::whereDate('tanggal', '=', date('Y-m-d'))->where('nip', Auth::user()->username);
                 if ($absen->count() == 0) AbsenLog::create(['tanggal' => date('Y-m-d'), 'kd_skpd' => Auth::user()->kd_skpd, 'nip' => Auth::user()->username]);
@@ -66,8 +76,8 @@ class AbsenController extends Controller
                 $filename_gambar = time() . '.' . $gambar->getClientOriginalExtension();
 
                 $dt = new AbsenData;
-                $dt->lat = $request->lat;
-                $dt->long = $request->long;
+                $dt->lat = $lat;
+                $dt->long = $long;
                 $dt->foto = $filename_gambar;
                 $dt->absen_id = $log->first()['id'];
 
