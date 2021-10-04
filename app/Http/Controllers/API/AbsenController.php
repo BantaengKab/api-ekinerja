@@ -57,6 +57,7 @@ class AbsenController extends Controller
         // $jam_akhir = '20:30';
         $jam_skrang =  date('H:i:s');
         $cek = getDistance($absenRadius['lat'], $absenRadius['long'], $lat, $long);
+        return $cek;
         if (!isset($cek)) return ResponseFormatter::error([], 'Anda berada di luar area absensi ', 400);
 
 
