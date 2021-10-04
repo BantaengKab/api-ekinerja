@@ -22,6 +22,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::resource('permohonan', 'API\PermohonanController');
     Route::get('absen-radius', 'API\AbsenRadiusController@index');
     Route::resource('absen', 'API\AbsenController');
+    Route::get('get-absen', 'API\AbsenController@index');
 });
 
 
