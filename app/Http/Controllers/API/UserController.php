@@ -47,11 +47,11 @@ class UserController extends Controller
             // }
 
             # Jika hash tidak sesuai
-            $user = User::where('username', $request->username)->first();
+            $user = User::where('username', $request->username);
             # cek perangkat yang digunakan
-            if ($user['kd_perangkat'] ==  null) {
+            if ($user['kd_perangkat'] ==  null || $user['kd_perangkat'] ==  '') {
 
-                User::where('id', $user['id'])
+                User::where('id', $user->first()['id'])
                     ->update([
                         'kd_perangkat' => $request->kd_perangkat,
                     ]);
@@ -64,7 +64,7 @@ class UserController extends Controller
             }
 
 
-            $md5 = md5($user['id']);
+            $md5 = md5($user->first()['id']);
             $hash = hash('sha256', $md5 . $request->pass);
 
             if ($user['pass'] != $hash) {
@@ -77,13 +77,13 @@ class UserController extends Controller
 
 
             # jika berhasil maka loginkan
-            $tokenResult = $user->createToken($user['full_name']);
+            $tokenResult = $user->first()->createToken($user->first()['full_name']);
             $token = $tokenResult->token;
             $token->save();
             return ResponseFormatter::success([
                 'access_token' => $tokenResult->accessToken,
                 'token_type' => 'Bearer',
-                'user' => $user
+                'user' => $user->first()
             ], 'Authenticated');
         } catch (Exception $error) {
             return ResponseFormatter::error([

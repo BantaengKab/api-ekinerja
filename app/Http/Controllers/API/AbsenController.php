@@ -51,6 +51,7 @@ class AbsenController extends Controller
 
         $jamKerja = JamKerja::all();
         $pegawai = Pegawai::where('nip_pegawai', Auth::user()->username)->first();
+        if (!isset($pegawai)) return ResponseFormatter::error(["message" => "Lokasi Absen tidak ditemukan"], 'Authenticated');
         $absenRadius = AbsenRadius::where('kd_skpd', $pegawai['kd_skpd'])->first();
         $lat = $request->lat;
         $long = $request->long;
@@ -59,7 +60,7 @@ class AbsenController extends Controller
         // $jam_akhir = '20:30';
         $jam_skrang =  date('H:i:s');
         $distance = getDistance($absenRadius['lat'], $absenRadius['long'], $lat, $long);
-        if ($distance > $absenRadius->radius) return ResponseFormatter::error([], 'Anda berada di luar area absensi ', 400);
+        if ($distance > $absenRadius->radius) return ResponseFormatter::error(["message" => "Anda berada di luar area absensi"], 'Authenticated');
 
 
 
