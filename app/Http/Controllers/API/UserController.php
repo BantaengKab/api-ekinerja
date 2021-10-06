@@ -49,7 +49,7 @@ class UserController extends Controller
             # Jika hash tidak sesuai
             $user = User::where('username', $request->username);
             # cek perangkat yang digunakan
-            if ($user['kd_perangkat'] ==  null || $user['kd_perangkat'] ==  '') {
+            if ($user->first()['kd_perangkat'] ==  null || $user->first()['kd_perangkat'] ==  '') {
 
                 User::where('id', $user->first()['id'])
                     ->update([
