@@ -56,7 +56,7 @@ class UserController extends Controller
                         'kd_perangkat' => $request->kd_perangkat,
                     ]);
             } else {
-                if ($user['kd_perangkat'] !=  $request->kd_perangkat) {
+                if ($user->first()['kd_perangkat'] !=  $request->kd_perangkat) {
                     return ResponseFormatter::error([
                         'message' => 'Silahkan gunakan perangkat pribadi anda',
                     ], 'Device not found', 501);
@@ -67,7 +67,7 @@ class UserController extends Controller
             $md5 = md5($user->first()['id']);
             $hash = hash('sha256', $md5 . $request->pass);
 
-            if ($user['pass'] != $hash) {
+            if ($user->first()['pass'] != $hash) {
                 throw new \Exception('Invalid Credentials');
             }
 
