@@ -54,6 +54,7 @@ class UserController extends Controller
         $hash = hash('sha256', $md5 . $request->pass);
 
         if ($user->first()['pass'] != $hash) {
+            return 22;
             throw new \Exception('Invalid Credentials');
         }
 
