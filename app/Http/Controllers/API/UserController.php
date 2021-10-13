@@ -55,8 +55,6 @@ class UserController extends Controller
                     ->update([
                         'kd_perangkat' => $kd_perangkat,
                     ]);
-
-                return 1;
             } else {
                 if ($user->first()['kd_perangkat'] !=  $request->kd_perangkat) {
                     return ResponseFormatter::error([
@@ -68,7 +66,7 @@ class UserController extends Controller
 
             $md5 = md5($user->first()['id']);
             $hash = hash('sha256', $md5 . $request->pass);
-
+            return 1;
             if ($user->first()['pass'] != $hash) {
                 throw new \Exception('Invalid Credentials');
             }
