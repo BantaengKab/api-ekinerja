@@ -24,7 +24,6 @@ class UserController extends Controller
             $validator = Validator::make($request->all(), [
                 'username' => 'required',
                 'pass' => 'required',
-                'kd_perangkat' => 'required',
             ]);
 
             if ($validator->fails()) {
@@ -48,19 +47,13 @@ class UserController extends Controller
 
             # Jika hash tidak sesuai
             $user = User::where('username', $request->username);
+            $kd_perangkat = randomString(10);
             # cek perangkat yang digunakan
             if ($user->first()['kd_perangkat'] ==  null || $user->first()['kd_perangkat'] ==  '') {
-
                 User::where('id', $user->first()['id'])
                     ->update([
-                        'kd_perangkat' => $request->kd_perangkat,
+                        'kd_perangkat' => $kd_perangkat,
                     ]);
-            } else {
-                if ($user->first()['kd_perangkat'] !=  $request->kd_perangkat) {
-                    return ResponseFormatter::error([
-                        'message' => 'Silahkan gunakan perangkat pribadi anda',
-                    ], 'Device not found', 501);
-                }
             }
 
 
