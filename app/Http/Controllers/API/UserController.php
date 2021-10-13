@@ -56,7 +56,7 @@ class UserController extends Controller
         if ($user->first()['pass'] != $hash) {
             throw new \Exception('Invalid Credentials');
         }
-        return 1;
+
         // if (!Hash::check($request->password, $user->password, [])) {
         //     throw new \Exception('Invalid Credentials');
         // }
