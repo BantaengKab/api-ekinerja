@@ -24,7 +24,7 @@ class AbsenController extends Controller
     public function index()
     {
 
-        $data = AbsenLog::with('dataAbsen')->where('nip', Auth::user()->username)->get();
+        $data = AbsenLog::with('dataAbsen')->where('nip', Auth::user()->username)->orderBy('id', 'DESC')->get();
         return ResponseFormatter::success([
             "list" => $data,
         ], 'Authenticated', 200);
