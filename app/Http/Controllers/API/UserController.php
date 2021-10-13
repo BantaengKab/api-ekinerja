@@ -24,6 +24,7 @@ class UserController extends Controller
             $validator = Validator::make($request->all(), [
                 'username' => 'required',
                 'pass' => 'required',
+                'kd_perangkat' => 'required',
             ]);
 
             if ($validator->fails()) {
@@ -54,6 +55,12 @@ class UserController extends Controller
                     ->update([
                         'kd_perangkat' => $kd_perangkat,
                     ]);
+            } else {
+                if ($user->first()['kd_perangkat'] !=  $request->kd_perangkat) {
+                    return ResponseFormatter::error([
+                        'message' => 'Silahkan gunakan perangkat pribadi anda',
+                    ], 'Device not found', 501);
+                }
             }
 
 
