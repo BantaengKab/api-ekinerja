@@ -78,9 +78,9 @@ class UserController extends Controller
 
             # jika berhasil maka loginkan
             $tokenResult = $user->first()->createToken($user->first()['full_name']);
+            return 1;
             $token = $tokenResult->token;
             $token->save();
-            return 1;
             return ResponseFormatter::success([
                 'access_token' => $tokenResult->accessToken,
                 'token_type' => 'Bearer',
