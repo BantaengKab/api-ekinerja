@@ -49,6 +49,18 @@ class UserController extends Controller
             # Jika hash tidak sesuai
             $user = User::where('username', $request->username);
             $kd_perangkat = randomString(10);
+
+            $md5 = md5($user->first()['id']);
+            $hash = hash('sha256', $md5 . $request->pass);
+
+            if ($user->first()['pass'] != $hash) {
+                throw new \Exception('Invalid Credentials');
+            }
+            return 1;
+            // if (!Hash::check($request->password, $user->password, [])) {
+            //     throw new \Exception('Invalid Credentials');
+            // }
+
             # cek perangkat yang digunakan
             if ($user->first()['kd_perangkat'] ==  null || $user->first()['kd_perangkat'] ==  '') {
                 User::where('id', $user->first()['id'])
@@ -63,22 +75,9 @@ class UserController extends Controller
                 }
             }
 
-
-            $md5 = md5($user->first()['id']);
-            $hash = hash('sha256', $md5 . $request->pass);
-
-            if ($user->first()['pass'] != $hash) {
-                throw new \Exception('Invalid Credentials');
-            }
-
-            // if (!Hash::check($request->password, $user->password, [])) {
-            //     throw new \Exception('Invalid Credentials');
-            // }
-
-
             # jika berhasil maka loginkan
             $tokenResult = $user->first()->createToken($user->first()['full_name']);
-            return 1;
+
             $token = $tokenResult->token;
             $token->save();
             return ResponseFormatter::success([
