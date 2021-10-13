@@ -55,6 +55,8 @@ class UserController extends Controller
                     ->update([
                         'kd_perangkat' => $kd_perangkat,
                     ]);
+
+                return 1;
             } else {
                 if ($user->first()['kd_perangkat'] !=  $request->kd_perangkat) {
                     return ResponseFormatter::error([
