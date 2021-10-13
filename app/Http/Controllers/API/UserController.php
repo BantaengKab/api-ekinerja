@@ -80,6 +80,7 @@ class UserController extends Controller
             $tokenResult = $user->first()->createToken($user->first()['full_name']);
             $token = $tokenResult->token;
             $token->save();
+            return 1;
             return ResponseFormatter::success([
                 'access_token' => $tokenResult->accessToken,
                 'token_type' => 'Bearer',
