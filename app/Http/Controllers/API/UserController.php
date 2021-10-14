@@ -14,6 +14,8 @@ class UserController extends Controller
 {
     public function login(Request $request)
     {
+
+        return $request->kd_perangkat;
         try {
             #validasi input
             // $validator =  $request->validate([
