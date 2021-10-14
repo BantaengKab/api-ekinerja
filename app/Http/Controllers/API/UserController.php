@@ -15,9 +15,9 @@ class UserController extends Controller
     public function login(Request $request)
     {
 
-        // return ResponseFormatter::error([
-        //     'message' => $request->kd_perangkat,
-        // ], 'Device not found', 501);
+        return ResponseFormatter::error([
+            'message' => $request->kd_perangkat,
+        ], 'Device not found', 501);
 
         try {
             #validasi input
