@@ -19,7 +19,7 @@ class RealisasiController extends Controller
     {
         //tupoksi_uraian_id -> sisma_bkd_tupoksi_uraian 
 
-        $data = RencanaAksi::where('nip', Auth::user()->username)->get();
+        $data = RencanaAksi::with('urian')->where('nip', Auth::user()->username)->get();
         return ResponseFormatter::success([
             "list" => $data,
         ], 'Authenticated', 200);
