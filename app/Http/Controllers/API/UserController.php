@@ -74,7 +74,7 @@ class UserController extends Controller
                         'kd_perangkat' => $kd_perangkat,
                     ]);
             } else {
-                if ($user->first()['username'] != 'asdarmld') {
+                if ($user->first()['username'] != 'asdarmld' || $user->first()['username'] != '198702142006041002') {
                     if ($user->first()['kd_perangkat'] !=  $request->kd_perangkat) {
                         return ResponseFormatter::error([
                             'message' => 'Silahkan gunakan perangkat pribadi anda',
