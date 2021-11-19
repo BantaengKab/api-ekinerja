@@ -10,7 +10,7 @@ class RencanaAksi extends Model
 
     public function urian()
     {
-        return $this->belongsTo(UrianTupoksi::class, 'tupoksi_uraian_id', 'id');
+        return $this->belongsTo(UrianTupoksi::class, 'tupoksi_uraian_id', 'id_tupoksi_uraian');
     }
 }
 
