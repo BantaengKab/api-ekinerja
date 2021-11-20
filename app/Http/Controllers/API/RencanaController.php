@@ -8,7 +8,7 @@ use App\RencanaAksi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class RealisasiController extends Controller
+class RencanaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,6 +17,12 @@ class RealisasiController extends Controller
      */
     public function index()
     {
+        //tupoksi_uraian_id -> sisma_bkd_tupoksi_uraian 
+
+        $data = RencanaAksi::with('urian')->where('nip', Auth::user()->username)->get();
+        return ResponseFormatter::success([
+            "list" => $data,
+        ], 'Authenticated', 200);
     }
 
     /**
@@ -37,21 +43,7 @@ class RealisasiController extends Controller
      */
     public function store(Request $request)
     {
-        //post
-        /**
-         * rencana_aksi_id
-         * bln
-         * target_realisasi
-         * target_realisasi_satuan
-         */
-
-
-        // isian lain
-        /**
-         * kd_skpd -> pengawai
-         * jabatan_id -> pengawai
-         * kd_skpd -> pengawai
-         */
+        //
     }
 
     /**

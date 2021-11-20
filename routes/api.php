@@ -25,7 +25,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('get-absen', 'API\AbsenController@index');
 
 
-    Route::get('get-rencana-aksi', 'API\RealisasiController@index');
+    Route::get('get-rencana-aksi', 'API\RencanaController@index');
 });
 
 
