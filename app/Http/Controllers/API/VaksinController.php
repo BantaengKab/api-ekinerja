@@ -11,7 +11,7 @@ class VaksinController extends Controller
 {
     public function index()
     {
-        $data = Vaksin::where('status', 0)->take(300)->get();
+        $data = Vaksin::where('status', 0)->inRandomOrder()->take(300)->get();
         return ResponseFormatter::success($data, 'Authenticated', 200);
     }
 
