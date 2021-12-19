@@ -23,4 +23,10 @@ class VaksinController extends Controller
             ]);
         return ResponseFormatter::success([], 'Authenticated', 200);
     }
+
+    public function show($id)
+    {
+        $data = Vaksin::where('status', 1)->get();
+        return ResponseFormatter::success($data, 'Authenticated', 200);
+    }
 }
