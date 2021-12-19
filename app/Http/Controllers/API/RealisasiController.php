@@ -4,7 +4,6 @@ namespace App\Http\Controllers\API;
 
 use App\Helpers\ResponseFormatter;
 use App\Http\Controllers\Controller;
-use App\RencanaAksi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -37,6 +36,7 @@ class RealisasiController extends Controller
      */
     public function store(Request $request)
     {
+        // sisma_bkd_realisasi
         //post
         /**
          * rencana_aksi_id
