@@ -45,7 +45,7 @@ class VaksinController extends Controller
     public function login(Request $request)
     {
         $username = 'Admin';
-        $password =  'BantaengKab';
+        $password =  'admin';
         if ($username != $request->username)  return ResponseFormatter::error([], 'Authentication Failed', 500);
         if ($password != $request->password)  return ResponseFormatter::error([], 'Authentication Failed', 500);
 
