@@ -30,5 +30,6 @@ Route::group(['middleware' => 'auth:api'], function () {
 
 
 Route::resource('vaksin', 'API\VaksinController');
+Route::post('login-vaksin', 'API\VaksinController@login');
 
 Route::post('login', 'API\UserController@login');
