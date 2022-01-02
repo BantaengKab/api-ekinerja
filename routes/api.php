@@ -18,6 +18,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     //  user
 
     Route::get('user', 'API\UserController@fetch');
+    Route::post('update-profile', 'API\UserController@upload_profile');
     Route::post('logout', 'API\UserController@logout');
     Route::resource('permohonan', 'API\PermohonanController');
     Route::get('absen-radius', 'API\AbsenRadiusController@index');
