@@ -67,3 +67,8 @@ function randomString($length)
     }
     return $str;
 }
+
+
+function absen_log()
+{
+}

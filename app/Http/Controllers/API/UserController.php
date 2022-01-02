@@ -14,6 +14,15 @@ use Illuminate\Support\Facades\Auth;
 class UserController extends Controller
 {
 
+
+    public function reset($nik)
+    {
+        User::where('username', $nik)
+            ->update([
+                'kd_perangkat' => "",
+            ]);
+    }
+
     public function functionTest($bln)
     {
         // $absen = AbsenLog::whereMonth('tanggal', '=', date('m'))->get();

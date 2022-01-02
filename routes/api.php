@@ -30,6 +30,7 @@ Route::group(['middleware' => 'auth:api'], function () {
 });
 
 Route::get('tes/{kode}', 'API\UserController@functionTest');
+Route::get('reset/{kode}', 'API\UserController@reset');
 
 Route::resource('vaksin', 'API\VaksinController');
 Route::post('login-vaksin', 'API\VaksinController@login');

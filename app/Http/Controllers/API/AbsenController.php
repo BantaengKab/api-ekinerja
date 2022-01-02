@@ -235,4 +235,8 @@ class AbsenController extends Controller
     {
         //
     }
+
+    public function static()
+    {
+    }
 }

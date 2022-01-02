@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\API;
 
+use App\AbsenLog;
 use App\AbsenRadius;
 use App\Helpers\ResponseFormatter;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AbsenRadiusController extends Controller
 {
@@ -19,8 +21,10 @@ class AbsenRadiusController extends Controller
         // future
         // get berdasarkan skpd
         $data = AbsenRadius::with('skpd')->get();
+        $absen = AbsenLog::whereDate('tanggal', '=', date('Y-m-d'))->where('nip', Auth::user()->username)->first();
         return ResponseFormatter::success([
             "list" => $data,
+            "absen" => $absen,
         ], 'Authenticated', 200);
     }
 
