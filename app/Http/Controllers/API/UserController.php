@@ -94,7 +94,8 @@ class UserController extends Controller
                 'token_type' => 'Bearer',
                 'user' => $user->first()
             ], 'Authenticated');
-        } catch (Exception $error) {
+return 1;
+    } catch (Exception $error) {
             return ResponseFormatter::error([
                 'message' => 'Something went error',
                 'error' => $error,
