@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\AbsenLog;
 use App\Helpers\ResponseFormatter;
 use App\Http\Controllers\Controller;
 use App\User;
@@ -12,6 +13,14 @@ use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
+
+    public function functionTest()
+    {
+        $absen = AbsenLog::whereDate('tanggal', '=', date('m'))->get();
+
+        return $absen;
+    }
+
     public function login(Request $request)
     {
 
@@ -95,8 +104,8 @@ class UserController extends Controller
                 'token_type' => 'Bearer',
                 'user' => $user->first()
             ], 'Authenticated');
-return 1;
-    } catch (Exception $error) {
+            return 1;
+        } catch (Exception $error) {
             return ResponseFormatter::error([
                 'message' => 'Something went error',
                 'error' => $error,
