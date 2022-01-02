@@ -16,7 +16,7 @@ class UserController extends Controller
 
     public function functionTest()
     {
-        $absen = AbsenLog::whereDate('tanggal', '=', date('m'))->get();
+        $absen = AbsenLog::whereMonth('tanggal', '=', date('m'))->get();
 
         return $absen;
     }
