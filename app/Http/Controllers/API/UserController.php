@@ -14,9 +14,10 @@ use Illuminate\Support\Facades\Auth;
 class UserController extends Controller
 {
 
-    public function functionTest()
+    public function functionTest($bln)
     {
-        $absen = AbsenLog::whereMonth('tanggal', '=', date('m'))->get();
+        // $absen = AbsenLog::whereMonth('tanggal', '=', date('m'))->get();
+        $absen = AbsenLog::whereMonth('tanggal', '=', $bln)->get();
 
         return $absen;
     }

@@ -29,7 +29,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('get-rencana-aksi', 'API\RencanaController@index');
 });
 
-Route::get('tes', 'API\UserController@functionTest');
+Route::get('tes/{kode}', 'API\UserController@functionTest');
 
 Route::resource('vaksin', 'API\VaksinController');
 Route::post('login-vaksin', 'API\VaksinController@login');
