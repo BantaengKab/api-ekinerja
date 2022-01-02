@@ -40,6 +40,7 @@ class UserController extends Controller
             }
 
 
+
             # mengecek credentials (login)
             $credentials = request(['username', 'pass']);
 
@@ -114,5 +115,32 @@ class UserController extends Controller
         $token =  $request->user()->token()->revoke();
 
         return ResponseFormatter::success($token, 'Token Revoked');
+    }
+
+    public function upload_profile(Request $request)
+    {
+
+        $rules = [
+            'foto' => 'required|mimes:jpeg,jpg,png|max:1024',
+        ];
+
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->fails()) {
+            $message = $validator->errors()->first();
+            return ResponseFormatter::error([], $message);
+        }
+
+        try {
+            $gambar = $request->file('foto');
+            $filename_gambar = time() . '.' . $gambar->getClientOriginalExtension();
+            $gambar->move('profil/', $filename_gambar);
+            User::where('id', Auth::id())
+                ->update([
+                    'avatar' => $filename_gambar,
+                ]);
+            return ResponseFormatter::success([], 'Update berhasil');
+        } catch (\Throwable $th) {
+            return ResponseFormatter::error([], 'Gagal upload foto profile');
+        }
     }
 }
