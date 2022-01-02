@@ -21,6 +21,8 @@ class UserController extends Controller
             ->update([
                 'kd_perangkat' => "",
             ]);
+
+        return 'berhasil';
     }
 
     public function functionTest($bln)
